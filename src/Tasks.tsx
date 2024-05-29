@@ -14,9 +14,10 @@ import CreateTaskForm from './components/CreateTaskForm';
 import ExportTask from './components/ExportTask';
 import { Task } from './interface';
 import { useEffect, useState } from 'react';
+import Spinner from './components/Spinner';
 function TasksPage() {
   const [page, setPage] = useState(1);
-  const { data, refetch } = useGetTasksQuery(page);
+  const { data, refetch, isLoading } = useGetTasksQuery(page);
   useEffect(() => {
     refetch();
   }, [page]);
@@ -56,6 +57,9 @@ function TasksPage() {
           }
           {
             data && data?.data.length < 1 && <p className='text-center my-3 text-lg'>No tasks available</p>
+          }
+          {
+            isLoading && <Spinner/>
           }
         </ul>
         <div id="pagination" className="flex justify-between pt-6 pb-9 border-t px-5 border-t-[#EBEBEB]">
